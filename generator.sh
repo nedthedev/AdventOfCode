@@ -4,13 +4,13 @@
 
 pwd=$(pwd)
 
-for i in $(ls -d */) 
+for year in {2015..2024}
 do 
   for day in {01..25}
   do 
-    day="${pwd}/${i}Day_${day}"
-    mkdir $day
-    echo "#!/usr/bin/python3" >> "${day}/main.py"
+    day="${pwd}/${year}/Day_${day}"
+    mkdir -p $day
+    printf "#!/usr/bin/python3\n\nif __name__ == \"__main__\":\n\tprint(\"Hi :)\")" >> "${day}/main.py"
     chmod +x "${day}/main.py"
   done
 done
