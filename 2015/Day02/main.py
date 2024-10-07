@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-INPUT = """29x13x26
+DATA = """29x13x26
 11x11x14
 27x2x5
 6x10x13
@@ -1038,5 +1038,5 @@ def part_two(data):
 	return ribbon_need
 
 if __name__ == "__main__":
-	print(part_one(INPUT))
-	print(part_two(INPUT))
+	print(part_one(DATA))
+	print(part_two(DATA))
