@@ -1,5 +1,7 @@
 # 2015 - Day 08
 
 ## Part One
+Ended up doing this one in Bash, mostly because I thought it would be simpler to sift through the strings without having to deal with converting them to raw strings and reverting any automatic ascii decodings that would be done by Python or JavaScript. Fairly straightforward in Bash. Ended up just iterating through each string and checking if the character was "\". If it was, I'd then look at the next character and determine if it was one of '\"x'. If it was an x, I knew that I could skip forward three characters to the end of the encoding. The others I knew I could skip forward one character. Then I know to increment my 'string' characters by 1, even though there's more than one 'code' character representing it. Also, rather than deal with another condition to check against with the wrapping " characters, I skip the first and last characters in my for loop.
 
 ## Part Two
+Part one was definitely the tougher of the two challenges here. I ended up just copying part one for my part two foundation. Then, in part two I knew that there would always be an additional 4 characters for the wrapping quotes. With that, I then iterated through the string and checked for '\', if on one, then check the next and if it's one of '\' or '"', then I know that I'll need two additional '\' characters to encode the '\"'. If, however, it was an x, I need only add one additiona '\' to encode the initial '\' in whatever ascii encoding it represents.
