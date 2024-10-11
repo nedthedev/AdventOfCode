@@ -4,7 +4,7 @@
 
 pwd=$(pwd)
 
-for year in {2016..2024}
+for year in {2015..2024}
 do 
   for day in {01..25}
   do 
