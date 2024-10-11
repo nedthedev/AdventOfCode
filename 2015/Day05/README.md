@@ -1,4 +1,4 @@
-# 2015 - Day 05
+# [2015 - Day 05 (Link)](https://adventofcode.com/2015/day/5)
 
 ## Part One
 An easy one still. I went the route of building designated functions for each qualifier. This made it easy to test whether or not the logic for these conditions are working as intended. Then the only thing I need to do is apply all of the checking functions, if they're true then increment the counter for how many nice strings there are.

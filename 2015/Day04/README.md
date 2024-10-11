@@ -1,4 +1,4 @@
-# 2015 - Day 04
+# [2015 - Day 04 (Link)](https://adventofcode.com/2015/day/4)
 
 ## Part One
 This one wasn't as tricky as I had initially thought it might be. Fortunately, Python has a nifty integrated utility to allow getting hashes. I had to read up on the documentation for how the library worked, but once I did that I was able to simply brute-force through all possibilities to find the md5 hash that started with 5 zeros. Not sure if there's a better way to go about this one without brute-force, but it was done quickly enough.

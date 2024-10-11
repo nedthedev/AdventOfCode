@@ -1,4 +1,4 @@
-# 2016 - Day 21
+# [2016 - Day 21 (Link)](https://adventofcode.com/2016/day/21)
 
 ## Part One
 

@@ -1,4 +1,4 @@
-# 2018 - Day 07
+# [2018 - Day 07 (Link)](https://adventofcode.com/2018/day/7)
 
 ## Part One
 

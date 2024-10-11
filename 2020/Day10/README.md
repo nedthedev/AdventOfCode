@@ -1,4 +1,4 @@
-# 2020 - Day 10
+# [2020 - Day 10 (Link)](https://adventofcode.com/2020/day/10)
 
 ## Part One
 

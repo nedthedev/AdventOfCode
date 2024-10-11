@@ -1,4 +1,4 @@
-# 2024 - Day 03
+# [2024 - Day 03 (Link)](https://adventofcode.com/2024/day/3)
 
 ## Part One
 
