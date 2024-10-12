@@ -101,7 +101,10 @@ def part_one(data, fastest=True):
 				shortest = dist
 	return shortest
 
+def part_two(data, fastest):
+	return part_one(data, fastest)
+
 if __name__ == "__main__":
 	data = parse(DATA)
 	print(part_one(data))
-	print(part_one(data, False))
+	print(part_two(data, False))
