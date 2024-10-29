@@ -167,21 +167,29 @@ def print_grid(data):
 	for row in data:
 		print(''.join(row))
 
-def part_one(data, steps, part2=False):
-	for i in range(steps):
-		data = simulate(data, part2)
-		# print_grid(data)
-		# time.sleep(.05)
+def step(data, part2):
+	data = simulate(data, part2)
+	# print_grid(data)
+	# time.sleep(.5)
+	return data
+
+def part_one(data, steps, part2=False, inf=False):
+	if(inf):
+		while(True):
+			data = step(data, part2)
+	else:
+		for i in range(steps):
+			data = step(data, part2)
 	return lights_on(data)
 
-def part_two(data, steps):
+def part_two(data, steps, inf):
 	data[0][0] = '#'
 	data[0][-1] = '#'
 	data[-1][0] = '#'
 	data[-1][-1] = '#'
-	return part_one(data, steps, part2=True)
+	return part_one(data, steps, True, inf)
 
 if __name__ == "__main__":
 	data = parse(DATA)
 	print(part_one(data, 100))
-	print(part_two(data, 100))
+	print(part_two(data, 100, False))
