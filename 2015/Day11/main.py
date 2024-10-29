@@ -1,7 +1,5 @@
 #!/usr/bin/python3
 
-import time
-
 DATA = """hepxcrrq"""
 
 def has_three_consec(data):
