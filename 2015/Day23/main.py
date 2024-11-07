@@ -57,8 +57,7 @@ tpl a
 inc a""".split("\n")
 
 def run_instruction(instruction, state):
-	instruction = instruction.replace(",", "")
-	instruction = instruction.split(" ")
+	instruction = instruction.replace(",", "").split(" ")
 	line_was = state['line']
 	match instruction[0]:
 		case 'hlf':
@@ -71,16 +70,10 @@ def run_instruction(instruction, state):
 			state['line'] += int(instruction[1])
 		case 'jie':
 			if(state[instruction[1]] % 2 == 0): 
-				if(instruction[2][0] == "+"):
-					state['line'] += int(instruction[2])
-				else:
-					state['line'] -= int(instruction[2])
+				state['line'] += int(instruction[2])
 		case 'jio':
 			if(state[instruction[1]] == 1): 
-				if(instruction[2][0] == "+"):
-					state['line'] += int(instruction[2])
-				else:
-					state['line'] -= int(instruction[2])
+				state['line'] += int(instruction[2])
 	if(state['line'] == line_was): state['line'] += 1
 	return state
 
