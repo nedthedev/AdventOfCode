@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import math
+import time
 
 DATA = """84|39
 48|11
@@ -1374,34 +1375,34 @@ DATA = """84|39
 41,92,99,31,82,72,24,98,88,48,16,47,78,74,59,95,97,75,85,35,87
 72,83,75,92,54,59,74,31,16,85,48,82,98,97,63,45,69,12,61""".split("\n")
 
-DATA = """47|53
-97|13
-97|61
-97|47
-75|29
-61|13
-75|53
-29|13
-97|29
-53|29
-61|53
-97|53
-61|29
-47|13
-75|47
-97|75
-47|61
-75|61
-47|29
-75|13
-53|13
+# DATA = """47|53
+# 97|13
+# 97|61
+# 97|47
+# 75|29
+# 61|13
+# 75|53
+# 29|13
+# 97|29
+# 53|29
+# 61|53
+# 97|53
+# 61|29
+# 47|13
+# 75|47
+# 97|75
+# 47|61
+# 75|61
+# 47|29
+# 75|13
+# 53|13
 
-75,47,61,53,29
-97,61,53,29,13
-75,29,13
-75,97,47,61,53
-61,13,29
-97,13,75,29,47""".split("\n")
+# 75,47,61,53,29
+# 97,61,53,29,13
+# 75,29,13
+# 75,97,47,61,53
+# 61,13,29
+# 97,13,75,29,47""".split("\n")
 
 def parse(data):
 	rules = {}
@@ -1420,7 +1421,7 @@ def is_valid(rules, job):
 	for i in range(len(job)-1):
 		for j in range(i, len(job)):
 			if(job[j] in rules and job[i] in rules[job[j]]):
-				return -j
+				return [i, j]
 	return True
 
 def fix_job(job):
@@ -1429,21 +1430,42 @@ def fix_job(job):
 def part_one(data):
 	answer = 0
 	for job in data['prints']:
-		if(is_valid(data['rules'], job)):
+		if(is_valid(data['rules'], job) is True):
 			answer += int(job[math.floor(len(job)/2)])
 	return answer
 
 def part_two(data):
-	bads = []
+	adjusted = []
 	bad_index = None
+	answer = 0
+	was_broken = False
 	for job in data['prints']:
-		bad_index = is_valid(data['rules'], job)
-		if(bad_index < 0):
-			bads.append(job)
-			print(bad_index)
+		while(True):
+			adjusted = []
+			bad_index = is_valid(data['rules'], job)
+			if(bad_index is not True):
+				was_broken = True
+				for num in job[:bad_index[0]]:
+					adjusted.append(num)
+				adjusted.append(job[bad_index[1]])
+				for num in job[bad_index[0]+1:bad_index[1]]:
+					adjusted.append(num)
+				adjusted.append(job[bad_index[0]])
+				for num in job[bad_index[1]+1:]:
+					adjusted.append(num)
+				print(bad_index)
+				print(adjusted)
+				job = adjusted
+			else:
+				if(was_broken):
+					print(job)
+					print(job[math.floor(len(job)/2)])
+					answer += int(job[math.floor(len(job)/2)])
+				break
+		was_broken = False
 	return answer
 
 if __name__ == "__main__":
 	data = parse(DATA)
-	# print(part_one(data))
+	print(part_one(data))
 	print(part_two(data))
