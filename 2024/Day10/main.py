@@ -59,6 +59,15 @@ DATA = """5678970120787667809876787651450321789810165432234561012345
 4309210369901234239457654703298976326721034501208710789234
 3218765478710123378765645612107845435434345212345621678101""".split("\n")
 
+# DATA = """89010123
+# 78121874
+# 87430965
+# 96549874
+# 45678903
+# 32019012
+# 01329801
+# 10456732""".split("\n")
+
 class Map:
 	def __init__(self, data):
 		self.map = self.gen_map(data)
@@ -80,23 +89,60 @@ class Map:
 					starts.append(cell)
 		return starts
 	
-	def is_trail(self, map, start):
+	def find_trail(self, map, start, trail_num):
+		trail = [start]
 		queue = [start]
-		rating = 0
-		while(len(queue) >= 0):
+		while(len(queue) > 0):
 			cC = queue.pop()
-			if(map[cC[0]][cC[1]].h == 9):
-				rating += 1
-			else:
-				nexts = cC.find_next_steps(map, cC)
-				for nC in nexts:
+			trail.append(cC)
+			nexts = cC.find_next_steps(map)
+			for nC in nexts:
+				if(not nC.mapped):
 					queue.append(nC)
+			cC.mapped = True
+		return trail
+	
+	def find_uniques(self, map, start, trail_num):
+		trails = []
+		trail = []
+		uniques = 0
+		cC = None
+		queue = [start]
+		while(len(queue) > 0):
+			cC = queue.pop()
+			trail.append(cC)
+			nexts = cC.find_next_steps(map)
+			if(len(nexts) > 1):
+				queue.append(nexts[0])
+				for nC in nexts[1:]:
+					# if(not nC.mapped):
+					trails.append(nC)
+			elif(len(nexts) == 1):
+				queue.append(nexts[0])
+			cC.mapped = True
+		for alt in trails:
+			uniques += self.find_uniques(map, alt, trail_num)
+		if(cC.h == 9):
+			uniques += 1
+		return uniques
+	
+	def print(self):
+		for row in self.map:
+			s = ''
+			for cell in row:
+				s += str(cell.h) if cell.mapped else '.'
+			print(s)
 
 	class Cell:
 		def __init__(self, y, x, h):
 			self.y = y
 			self.x = x
-			self.h = int(h)
+			try:
+				self.h = int(h)
+			except Exception as _:
+				self.h = -1
+			self.trail = None
+			self.mapped = False
 
 		def find_next_steps(self, map):
 			neighbors = [[-1,0], [0,1], [1,0], [0,-1]]
@@ -107,15 +153,35 @@ class Map:
 				nY, nX = self.y + neighbor[0], self.x + neighbor[1]
 				if(nY >= 0 and nY < len(map) and nX >= 0 and nX < len(map[0])):
 					if(map[nY][nX].h == (height + 1)):
-						queue.append([nY, nX])
+						queue.append(map[nY][nX])
 			return queue
 
 def part_one(data):
+	answer = 0
 	map = Map(data)
-	print(map.starts[0].find_next_steps(map.map))
+	for num, start in enumerate(map.starts):
+		trail = map.find_trail(map.map, start, num)
+		map.print()
+		for cell in trail:
+			if(cell.h == 9):
+				answer += 1
+		map.map = map.gen_map(data)
+		# if()
+	# for cell in trail:
+	# 	print(cell.h)
+	return answer
+	
 
 def part_two(data):
-	pass
+	answer = 0
+	map = Map(data)
+	for num, start in enumerate(map.starts):
+		trails = map.find_uniques(map.map, start, num)
+		print(trails)
+		map.print()
+		answer += trails
+	return answer
 
 if __name__ == "__main__":
-	part_one(DATA)
+	# print(part_one(DATA))
+	print(part_two(DATA))
